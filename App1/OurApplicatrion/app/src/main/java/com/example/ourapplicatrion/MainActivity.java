@@ -17,12 +17,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         txtMessage = findViewById(R.id.txtMessage);
         Button btnTryk = findViewById(R.id.btnTryk);
-        
+
         btnTryk.setOnClickListener((v) -> txtMessage.setText("Hej"));
     }
     @Override
     public void onClick(View v)
     {
         txtMessage.setText("Der blev trykket på knappen");
+        int tal = Integer.parseInt("125");
+
+        String str = "Tallet er " + tal;
+        String str2 = tal + "";
+
     }
 }
