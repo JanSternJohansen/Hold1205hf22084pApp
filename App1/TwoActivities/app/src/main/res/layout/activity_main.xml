@@ -19,4 +19,14 @@
         android:layout_height="wrap_content"
         android:text="Go to Second Act"
         android:id="@+id/btnGoToSecond"/>
+    <EditText
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="Skriv noget til Second Act"
+        android:id="@+id/edtWriteToSecond"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:id="@+id/txtFromSecond"/>
 </LinearLayout>
