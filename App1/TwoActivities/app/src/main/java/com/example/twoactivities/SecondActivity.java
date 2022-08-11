@@ -25,13 +25,13 @@ public class SecondActivity extends AppCompatActivity
 
         txtShowMessage = findViewById(R.id.txtSecond_ShowMessage);
         intent = getIntent();
-        String message = intent.getStringExtra("MessageToSecond");
+        String message = intent.getStringExtra(MainActivity.TEXT_TO_SECOND);
         txtShowMessage.setText(message);
     }
 
-    public void goBack(View v)
+    public void goBack(View v)//Registreret i xml Button
     {
-        intent.putExtra("FromSecond", edtWriteReturnText.getText().toString());
+        intent.putExtra(MainActivity.TEXT_FROM_SECOND, edtWriteReturnText.getText().toString());
         setResult(Activity.RESULT_OK, intent);
         finish();
     }

@@ -17,6 +17,12 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
 {
+    public static final int REQ_SECOND = 1;
+    public static final int REQ_THIRD = 2;
+    public static final String TEXT_TO_SECOND = "TextToSecond";
+    public static final String TEXT_FROM_SECOND = "TextFromSecond";
+
+
     Button btnGoToSecond;
     EditText edtWriteToSecond;
     TextView txtFromSecond;
@@ -30,18 +36,47 @@ public class MainActivity extends AppCompatActivity
         txtFromSecond = findViewById(R.id.txtFromSecond);
         edtWriteToSecond = findViewById(R.id.edtWriteToSecond);
         btnGoToSecond = findViewById(R.id.btnGoToSecond);
+
+        someActivityResultLauncher = registerForActivityResult(
+        new ActivityResultContracts.StartActivityForResult(),
+        new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    // There are no request codes
+                    Intent data = result.getData();
+                    String message = data.getStringExtra(TEXT_FROM_SECOND);
+                    txtFromSecond.setText(message);
+                }
+            }
+        });
+        
         btnGoToSecond.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 Intent intent = new Intent(MainActivity.this,SecondActivity.class);
-                intent.putExtra("MessageToSecond", edtWriteToSecond.getText().toString());
+                intent.putExtra(TEXT_TO_SECOND, edtWriteToSecond.getText().toString());
                 //startActivity(intent);
-                startActivityForResult(intent, 1);
-                //someActivityResultLauncher.launch(intent);
+                //startActivityForResult(intent, REQ_SECOND);
+                someActivityResultLauncher.launch(intent);
             }
         });
+    }
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+//    {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if(requestCode == REQ_SECOND && resultCode == Activity.RESULT_OK)
+//        {
+//            String message = data.getStringExtra(TEXT_FROM_SECOND);
+//            txtFromSecond.setText(message);
+//        }
+//    }
+}
 
 //       someActivityResultLauncher = registerForActivityResult(
 //                new ActivityResultContracts.StartActivityForResult(),
@@ -55,18 +90,4 @@ public class MainActivity extends AppCompatActivity
 //                            txtFromSecond.setText(message);
 //                        }
 //                    }
-  //              });
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == 1 && resultCode == Activity.RESULT_OK)
-        {
-            String message = data.getStringExtra("FromSecond");
-            txtFromSecond.setText(message);
-        }
-    }
-}
+//              });
