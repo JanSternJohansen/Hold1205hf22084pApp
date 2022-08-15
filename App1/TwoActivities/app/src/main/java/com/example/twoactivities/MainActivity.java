@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,77 +18,56 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
 {
-    public static final int REQ_SECOND = 1;
-    public static final int REQ_THIRD = 2;
-    public static final String TEXT_TO_SECOND = "TextToSecond";
-    public static final String TEXT_FROM_SECOND = "TextFromSecond";
-
-
-    Button btnGoToSecond;
-    EditText edtWriteToSecond;
-    TextView txtFromSecond;
-    ActivityResultLauncher<Intent> someActivityResultLauncher;
+    //TextView txtFromSecond;
+    ActivityResultLauncher<Intent> secondActivityLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        txtFromSecond = findViewById(R.id.txtFromSecond);
-        edtWriteToSecond = findViewById(R.id.edtWriteToSecond);
-        btnGoToSecond = findViewById(R.id.btnGoToSecond);
+        Button btnGoToSecond = findViewById(R.id.btnGoToSecond);
+        //txtFromSecond = findViewById(R.id.txtFromSecond);
 
-        someActivityResultLauncher = registerForActivityResult(
-        new ActivityResultContracts.StartActivityForResult(),
-        new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == Activity.RESULT_OK) {
-                    // There are no request codes
-                    Intent data = result.getData();
-                    String message = data.getStringExtra(TEXT_FROM_SECOND);
-                    txtFromSecond.setText(message);
-                }
-            }
-        });
-        
+//        secondActivityLauncher = registerForActivityResult(
+//        new ActivityResultContracts.StartActivityForResult(),
+//        new ActivityResultCallback<ActivityResult>() {
+//            @Override
+//            public void onActivityResult(ActivityResult result) {
+//                if (result.getResultCode() == Activity.RESULT_OK) {
+//                    // There are no request codes
+//                    Intent data = result.getData();
+//                    String message = data.getStringExtra("TextFromSecond");
+//                    Log.v("Tag",message);
+//                }
+//            }
+//        });
+
         btnGoToSecond.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 Intent intent = new Intent(MainActivity.this,SecondActivity.class);
-                intent.putExtra(TEXT_TO_SECOND, edtWriteToSecond.getText().toString());
+                intent.putExtra("TextToSecond", "Hej fra Main");
                 //startActivity(intent);
-                //startActivityForResult(intent, REQ_SECOND);
-                someActivityResultLauncher.launch(intent);
+                startActivityForResult(intent, 1);
+                //secondActivityLauncher.launch(intent);
             }
         });
     }
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
-//    {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if(requestCode == REQ_SECOND && resultCode == Activity.RESULT_OK)
-//        {
-//            String message = data.getStringExtra(TEXT_FROM_SECOND);
-//            txtFromSecond.setText(message);
-//        }
-//    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == 1 && resultCode == Activity.RESULT_OK)
+        {
+            String message = data.getStringExtra("TextFromSecond");
+            Log.v("Tag", message);
+            //txtFromSecond.setText(message);
+        }
+    }
 }
 
-//       someActivityResultLauncher = registerForActivityResult(
-//                new ActivityResultContracts.StartActivityForResult(),
-//                new ActivityResultCallback<ActivityResult>() {
-//                    @Override
-//                    public void onActivityResult(ActivityResult result) {
-//                        if (result.getResultCode() == Activity.RESULT_OK) {
-//                            // There are no request codes
-//                            Intent data = result.getData();
-//                            String message = data.getStringExtra("FromSecond");
-//                            txtFromSecond.setText(message);
-//                        }
-//                    }
-//              });
