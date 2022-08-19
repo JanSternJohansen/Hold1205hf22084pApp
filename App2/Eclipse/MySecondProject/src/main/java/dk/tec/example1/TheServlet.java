@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import dk.tec.AnalyseRequest;
+import dk.tec.DBTools;
 import dk.tec.Elev;
 
 
@@ -25,11 +26,11 @@ public class TheServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{
 		PrintWriter out = response.getWriter();
-		out.println("Context Path: " + request.getContextPath());
-		out.println("Servlet Path: " + request.getServletPath());
-		out.println("PathInfo: " + request.getPathInfo());
-		out.println("Request URL: " + request.getRequestURL() + "<br/>");
-		out.println("\n");
+		//out.println("Context Path: " + request.getContextPath());
+		//out.println("Servlet Path: " + request.getServletPath());
+		//out.println("PathInfo: " + request.getPathInfo());
+		//out.println("Request URL: " + request.getRequestURL() + "<br/>");
+		//out.println("\n");
 		
 		List<Elev> elever = new ArrayList<Elev>();
 		elever.add(new Elev(1, "Berk", "Træner"));
@@ -41,23 +42,28 @@ public class TheServlet extends HttpServlet {
 		AnalyseRequest analyse = new AnalyseRequest(request.getPathInfo());
 		ObjectMapper mapper = new ObjectMapper();
 		
+		DBTools db = new DBTools();
+		//Elev e = db.getElevById(3);
 		
 		switch(analyse.getLevel())
 		{
 		case MatchElevId:
 			int id = analyse.getId();
-			out.println("Match på Elev og Id = " + id);
-			Elev elev = elever.get(id);
-			out.println(mapper.writeValueAsString(elev));
+			//out.println("Match på Elev og Id = " + id);
+			// Uden database:
+			out.println(mapper.writeValueAsString(elever.get(id)));
+			// Med database:
+			//Elev elev = db.getElevById(id);
+			//out.println(mapper.writeValueAsString(elev));
 			break;
 			
 		case MatchElev:
-			out.println("Match på Elev");
-			out.println(mapper.writeValueAsString(elever));
+			//out.println("Match på Elev");
+			//out.println(mapper.writeValueAsString(elever));
 			break;
 			
 		case MatchNo:
-			out.println("Ingen match");
+			//out.println("Ingen match");
 			break;
 		}
 	}

@@ -1,5 +1,7 @@
 package dk.tec;
 
+import java.io.Serializable;
+
 public class Elev
 {
 	int id;
@@ -30,5 +32,8 @@ public class Elev
 		this.id = id;
 		this.name = name;
 		this.job = job;
+	}
+	public Elev() {
+	
 	}
 }
