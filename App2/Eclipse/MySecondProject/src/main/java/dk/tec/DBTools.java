@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class DBTools 
 {
@@ -63,4 +64,8 @@ public class DBTools
 		return theElev;		
 	}
 
+	public List<Elev> getAllElev(){ return null;}
+	public void insertNewElev(Elev e) {}
+	public void updateElev(Elev e) {}
+	public void deleteElev(int id) {}
 }

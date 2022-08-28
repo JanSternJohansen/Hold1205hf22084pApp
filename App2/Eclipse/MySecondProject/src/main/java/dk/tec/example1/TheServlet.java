@@ -60,7 +60,7 @@ public class TheServlet extends HttpServlet {
 			
 		case MatchElev:
 			//out.println("Match på Elev");
-			//out.println(mapper.writeValueAsString(elever));
+			out.println(mapper.writeValueAsString(elever));
 			break;
 			
 		case MatchNo:
@@ -69,20 +69,35 @@ public class TheServlet extends HttpServlet {
 		}
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException 
 	{
 		System.out.println("Nu er doPost() blevet kaldt");
-		
-		BufferedReader reader = request.getReader();
-		String jsonStr = reader.readLine();
+
+		BufferedReader in = request.getReader();
+		String jsonStr = in.readLine();
 		System.out.println(jsonStr);
-		
+
 		Elev e = null;
 		ObjectMapper mapper = new ObjectMapper();
 		e = mapper.readValue(jsonStr, Elev.class);
 		System.out.println("Navn: " + e.getName() + "  Job: " + e.getJob());
-		
-		
+
+	}
 	
+	protected void doPut(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException 
+	{
+		
+	}
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException 
+	{
+		
 	}
 }
+
+	
+	
+	
+	
